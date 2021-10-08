@@ -1,18 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   KeyboardAvoidingView,
   Keyboard,
   Platform,
+  ImageBackground,
+  StatusBar,
 } from 'react-native';
-import commonStyles from './commonStyles';
+
+// import {fields, loginInitialValues} from './loginFields';
+import {registerFields, registerInitialValues} from './registerFields';
+import Form from './components/Form';
 import FastImage from 'react-native-fast-image';
 import Typography from './components/Typography';
-import Input from './components/Input';
-import {RectButton} from 'react-native-gesture-handler';
-import Checkbox from './components/Checkbox';
+import Login from './screens/Login';
+import Register from './screens/Register';
 
 // Layout
 
@@ -35,6 +38,8 @@ const App = () => {
   const passwordInputRef = useRef(null);
 
   useEffect(() => {
+    // const onClick = () => {};
+    // document.addEventListener('click', onClick);
     const keyboardDidShow = Keyboard.addListener('keyboardDidShow', () => {
       setIsKeyboardVisible(true);
     });
@@ -45,6 +50,7 @@ const App = () => {
 
     // componentWillUnmount
     return () => {
+      // document.removeEventListener('click', onClick);
       keyboardDidShow.remove();
       keyboardDidHide.remove();
     };
@@ -52,89 +58,37 @@ const App = () => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
-        <FastImage
-          source={{
-            uri: 'https://reactjs.org/logo-og.png',
-            priority: FastImage.priority.high,
-          }}
-          style={{
-            height: isKeyboardVisible ? 50 : 100,
-            width: isKeyboardVisible ? 50 : 100,
-            borderRadius: 50,
-            alignSelf: 'center',
-            paddingVertical: 10,
-          }}
-          resizeMode="cover"
-        />
-        <View style={{flex: 1}}>
-          <Typography
-            variant="h1"
-            style={{marginVertical: 20, textAlign: 'center'}}>
-            Login
-          </Typography>
-          <Input
-            placeholder="Username"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() => {
-              passwordInputRef.current.focus();
-            }}
-          />
-          <Input
-            ref={passwordInputRef}
-            placeholder="Password"
-            secureTextEntry
-            returnKeyType="done"
-          />
+      <StatusBar hidden />
+      <ImageBackground
+        source={require('./assets/images/banner/banner.jpg')}
+        style={{flex: 1}}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{flex: 1}}>
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              margin: 10,
-            }}>
-            <Checkbox />
-            <Text style={{paddingLeft: 8}}>Remember Me?</Text>
-          </View>
-
-          <RectButton
-            style={{
-              height: 40,
-              backgroundColor: 'dodgerblue',
+              flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              margin: 10,
-              borderRadius: 10,
-            }}
-            onPress={() => {}}>
-            <View
-              accessible
-              accessibilityRole="button"
-              accessibilityLabel="Login">
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 16,
-                  fontWeight: '500',
-                }}>
-                Login
-              </Text>
-            </View>
-          </RectButton>
-        </View>
-        <Text style={{textAlign: 'center', marginVertical: 10}}>
-          Don't Have Acount? Please{` `}
-          <Text
-            onPress={() => {}}
-            style={{
-              color: 'red',
-              textDecorationLine: 'underline',
+              paddingVertical: 10,
             }}>
-            Signup
-          </Text>
-        </Text>
-      </KeyboardAvoidingView>
+            <FastImage
+              source={{
+                uri: 'https://reactjs.org/logo-og.png',
+                priority: FastImage.priority.high,
+              }}
+              style={{
+                height: isKeyboardVisible ? 50 : 100,
+                width: isKeyboardVisible ? 50 : 100,
+                borderRadius: 50,
+              }}
+              resizeMode="cover"
+            />
+          </View>
+          <Login />
+          {/* <Register /> */}
+        </KeyboardAvoidingView>
+      </ImageBackground>
 
       {/* <Button title="Login" />
       <TouchableHighlight underlayColor="black" onPress={() => {}}>
