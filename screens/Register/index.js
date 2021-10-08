@@ -1,17 +1,13 @@
 import React from 'react';
 import {View, Keyboard} from 'react-native';
+import {useHeaderHeight} from '@react-navigation/elements';
 import Form from '../../components/Form';
-import Typography from '../../components/Typography';
 import {registerFields, registerInitialValues} from './fields';
 
 const Register = () => {
+  const headerHeight = useHeaderHeight();
   return (
-    <View>
-      <Typography
-        variant="h1"
-        style={{textAlign: 'center', marginVertical: 20}}>
-        Register
-      </Typography>
+    <View style={{paddingTop: headerHeight, flex: 1}}>
       <Form
         fields={registerFields}
         initialValues={registerInitialValues}

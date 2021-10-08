@@ -1,17 +1,14 @@
 import React from 'react';
 import {View, Keyboard} from 'react-native';
+import {useHeaderHeight} from '@react-navigation/elements';
 import Form from '../../components/Form';
 import Typography from '../../components/Typography';
 import {fields, loginInitialValues} from './fields';
 
-const Login = () => {
+const Login = ({navigation}) => {
+  const headerHeight = useHeaderHeight();
   return (
-    <View>
-      <Typography
-        variant="h1"
-        style={{textAlign: 'center', marginVertical: 20}}>
-        Login
-      </Typography>
+    <View style={{paddingTop: headerHeight, flex: 1}}>
       <Form
         fields={fields}
         initialValues={loginInitialValues}
@@ -26,7 +23,9 @@ const Login = () => {
       <Typography style={{textAlign: 'center', marginVertical: 10}}>
         Don't Have Acount? Please{` `}
         <Typography
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate('Register');
+          }}
           style={{
             color: 'red',
             textDecorationLine: 'underline',
