@@ -7,13 +7,14 @@ const passwordInputRef = createRef();
 
 export const fields = [
   {
-    placeholder: 'Username',
+    placeholder: 'Email',
     keyboardType: 'email-address',
+    autoCapitalize: 'none',
     returnKeyType: 'next',
     onSubmitEditing: () => {
       passwordInputRef.current.focus();
     },
-    name: 'username',
+    name: 'email',
     component: Input,
     validate: value => {
       if (!value) {
@@ -28,7 +29,6 @@ export const fields = [
     placeholder: 'Password',
     secureTextEntry: true,
     returnKeyType: 'done',
-
     innerRef: passwordInputRef,
     name: 'password',
     component: Input,
@@ -48,7 +48,7 @@ export const fields = [
 ];
 
 export const loginInitialValues = {
-  username: '',
+  email: '',
   password: '',
   rememberMe: false,
 };

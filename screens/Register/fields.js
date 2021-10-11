@@ -3,17 +3,19 @@ import {createRef} from 'react';
 import Input from '../../components/Input';
 
 const emailRef = createRef();
+const ageRef = createRef();
+const lastNameRef = createRef();
 const passwordRef = createRef();
 const confirmPasswordRef = createRef();
 
 export const registerFields = [
   {
-    placeholder: 'Name',
+    placeholder: 'First Name',
     returnKeyType: 'next',
     onSubmitEditing: () => {
-      emailRef.current.focus();
+      lastNameRef.current.focus();
     },
-    name: 'name',
+    name: 'firstName',
     component: Input,
     validate: value => {
       if (!value) {
@@ -23,17 +25,38 @@ export const registerFields = [
     },
   },
   {
-    placeholder: 'Mobile Number',
+    innerRef: lastNameRef,
+    placeholder: 'Last Name',
     returnKeyType: 'next',
-    keyboardType: 'phone-pad',
     onSubmitEditing: () => {
-      emailRef.current.focus();
+      ageRef.current.focus();
     },
-    name: 'mobileNumber',
+    name: 'lastName',
     component: Input,
     validate: value => {
       if (!value) {
         return 'Required...';
+      }
+      return '';
+    },
+  },
+  {
+    innerRef: ageRef,
+    placeholder: 'Age',
+    returnKeyType: 'next',
+    keyboardType: 'number-pad',
+    maxLength: 3,
+    onSubmitEditing: () => {
+      emailRef.current.focus();
+    },
+    name: 'age',
+    component: Input,
+    validate: value => {
+      if (!value) {
+        return 'Required...';
+      }
+      if (value < 1 || value > 100) {
+        return 'Value should be between 0 and 100';
       }
       return '';
     },
@@ -41,6 +64,7 @@ export const registerFields = [
   {
     innerRef: emailRef,
     placeholder: 'Email',
+    autoCapitalize: 'none',
     keyboardType: 'email-address',
     returnKeyType: 'next',
     onSubmitEditing: () => {
@@ -85,14 +109,18 @@ export const registerFields = [
       if (!value) {
         return 'Required...';
       }
+      if (value.length < 5) {
+        return '';
+      }
       return '';
     },
   },
 ];
 
 export const registerInitialValues = {
-  name: '',
-  mobileNumber: '',
+  firstName: '',
+  lastName: '',
+  age: '',
   email: '',
   password: '',
   confirmPassword: '',
