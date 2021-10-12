@@ -4,10 +4,7 @@ import styles from './styles';
 
 const Typography = ({children, variant, style, ...rest}) => {
   return (
-    <Text
-      style={[styles.defaultColor, styles[variant], style]}
-      allowFontScaling={false}
-      {...rest}>
+    <Text style={[styles[variant], style]} allowFontScaling={false} {...rest}>
       {children}
     </Text>
   );

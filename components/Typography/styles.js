@@ -1,21 +1,29 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  defaultColor: {
-    color: 'blue',
-  },
   h1: {
     fontSize: 32,
     fontWeight: '700',
     lineHeight: 38,
     letterSpacing: 0.4,
+  },
+  h2: {
+    fontSize: 24,
+    fontWeight: '700',
+    lineHeight: 30,
+    letterSpacing: 0.4,
     color: 'red',
+  },
+  h3: {
+    fontSize: 20,
+    fontWeight: '600',
+    lineHeight: 24,
+    letterSpacing: 0.4,
   },
   body1: {
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 21,
-    color: 'blue',
   },
   body2: {
     fontSize: 16,

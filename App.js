@@ -1,5 +1,8 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React, {useState} from 'react';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -39,7 +42,7 @@ const HomeTabNavigation = () => {
 };
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigationRef = useNavigationContainerRef();
 
   const onReady = async () => {
     try {
@@ -47,7 +50,10 @@ const App = () => {
       if (res) {
         const user = JSON.parse(res);
         if (user.accessToken) {
-          setIsAuthenticated(true);
+          navigationRef.reset({
+            index: 0,
+            routes: [{name: 'Home'}],
+          });
         }
       }
     } catch (error) {
@@ -56,38 +62,34 @@ const App = () => {
   };
 
   return (
-    <NavigationContainer onReady={onReady}>
+    <NavigationContainer ref={navigationRef} onReady={onReady}>
       <Stack.Navigator>
-        {!isAuthenticated && (
-          <Stack.Group
-            screenOptions={{
-              headerTransparent: true,
-              headerShadowVisible: false,
-              headerTitleAlign: 'center',
-              headerTitleStyle: {
-                fontSize: 24,
-                color: 'red',
-                fontWeight: '700',
-              },
-            }}>
-            <Stack.Screen
-              name="Login"
-              getComponent={() => require('./screens/Login').default}
-            />
-            <Stack.Screen
-              name="Register"
-              getComponent={() => require('./screens/Register').default}
-            />
-          </Stack.Group>
-        )}
-        {isAuthenticated && (
-          <Stack.Group
-            screenOptions={{
-              headerShown: false,
-            }}>
-            <Stack.Screen name="Home" component={HomeTabNavigation} />
-          </Stack.Group>
-        )}
+        <Stack.Group
+          screenOptions={{
+            headerTransparent: true,
+            headerShadowVisible: false,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontSize: 24,
+              color: 'red',
+              fontWeight: '700',
+            },
+          }}>
+          <Stack.Screen
+            name="Login"
+            getComponent={() => require('./screens/Login').default}
+          />
+          <Stack.Screen
+            name="Register"
+            getComponent={() => require('./screens/Register').default}
+          />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="Home" component={HomeTabNavigation} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
