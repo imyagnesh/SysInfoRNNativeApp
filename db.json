@@ -31,6 +31,14 @@
       "lastName": "Modh",
       "age": "33",
       "id": 4
+    },
+    {
+      "email": "mahi.mbhide@gmail.com",
+      "password": "$2a$10$VAI4LXoX/fq9BAxaptDMk.Nq9WQu7iXkZ7VXgzYV2qCgp.du3t4Ry",
+      "firstName": "Mahendra",
+      "lastName": "singh",
+      "age": "23",
+      "id": 5
     }
   ]
 }
