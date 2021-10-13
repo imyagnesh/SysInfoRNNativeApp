@@ -1,17 +1,18 @@
 import axios from 'axios';
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, View, FlatList} from 'react-native';
+import {ScrollView, View, FlatList, useWindowDimensions} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {RectButton} from 'react-native-gesture-handler';
 import Divider from '../../components/Divider';
 import Typography from '../../components/Typography';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [data, setData] = useState([]);
 
   const loadData = useCallback(async () => {
     try {
       const res = await axios.get(
-        'https://jsonplaceholder.typicode.com/photos',
+        'https://jsonplaceholder.typicode.com/photos?_page=1&_limit=10',
       );
       setData(res.data);
     } catch (error) {}
@@ -23,36 +24,64 @@ const Home = () => {
 
   const renderItem = ({item}) => {
     return (
-      <View key={item.id} style={{padding: 10, flexDirection: 'row'}}>
+      <RectButton
+        onPress={() =>
+          navigation.navigate('DetailsPage', {headerBackTitle: 'Home'})
+        }
+        key={item.id}
+        style={{
+          height: 200,
+          aspectRatio: 3 / 2,
+          borderRadius: 10,
+        }}>
         <FastImage
           source={{
-            uri: item.thumbnailUrl,
+            uri: item.url,
           }}
           style={{
-            height: 72,
-            width: 72,
+            flex: 1,
             borderRadius: 10,
           }}
           resizeMode="cover"
         />
-        <Typography variant="body1" style={{flex: 1, paddingHorizontal: 8}}>
-          {item.title}
-        </Typography>
-      </View>
+        <View
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-end',
+            bottom: 0,
+            left: 0,
+            flex: 1,
+            height: 60,
+            backgroundColor: '#3d3d3d',
+            opacity: 0.6,
+            borderBottomEndRadius: 10,
+            borderBottomStartRadius: 10,
+          }}>
+          <Typography variant="body1" style={{padding: 8, color: '#fff'}}>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique,
+            dolores.
+          </Typography>
+        </View>
+      </RectButton>
     );
   };
 
   const keyExtractor = item => `${item.id}`;
 
   return (
-    <>
+    <ScrollView>
       <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        ItemSeparatorComponent={() => (
-          <Divider style={{marginHorizontal: 10, backgroundColor: '#d3d3d3'}} />
-        )}
+        ItemSeparatorComponent={() => <View style={{width: 20}} />}
+        contentContainerStyle={{padding: 20}}
+        pagingEnabled
+        snapToAlignment="center"
+        decelerationRate="fast"
+        snapToInterval={330}
       />
       {/* <ScrollView>
         {data.map(item => (
@@ -72,7 +101,7 @@ const Home = () => {
           </View>
         ))}
       </ScrollView> */}
-    </>
+    </ScrollView>
   );
 };
 

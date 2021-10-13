@@ -39,6 +39,14 @@
       "lastName": "singh",
       "age": "23",
       "id": 5
+    },
+    {
+      "email": "yashrajgupta2424@gmail.com",
+      "password": "$2a$10$GHgxb1c8gW6oqcynHncK8eKR4sajQXregv/4y/DlCiI.JRcnHh7n.",
+      "firstName": "Om",
+      "lastName": "Sharma ",
+      "age": "25",
+      "id": 6
     }
   ]
 }

@@ -6,6 +6,7 @@ import ImagePicker from '../../components/ImagePicker';
 import {RectButton} from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 import Typography from '../../components/Typography';
+import ChevronRightIcon from '../../assets/Icons/chevron_right.svg';
 
 const Settings = ({navigation}) => {
   const imagePickerRef = useRef(null);
@@ -73,6 +74,21 @@ const Settings = ({navigation}) => {
             style={{textAlign: 'center'}}
             variant="h2">{`${userInfo.firstName} ${userInfo.lastName}`}</Typography>
         )}
+        <RectButton
+          onPress={() => navigation.navigate('ChangePassword')}
+          style={{
+            marginVertical: 20,
+            paddingHorizontal: 10,
+            paddingVertical: 20,
+            backgroundColor: '#F7F7F7',
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Typography variant="h3" style={{flex: 1}}>
+              Change Password
+            </Typography>
+            <ChevronRightIcon height={24} width={24} fill="#2D2D2D" />
+          </View>
+        </RectButton>
       </View>
       <Button title="Logout" onPress={logout} />
     </View>

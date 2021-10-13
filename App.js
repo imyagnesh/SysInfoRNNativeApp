@@ -8,9 +8,57 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeIcon from './assets/Icons/home.svg';
 import SettingsIcon from './assets/Icons/settings.svg';
+import CollectionsIcons from './assets/Icons/collections.svg';
 
 const Stack = createNativeStackNavigator();
+
+const HomeStack = createNativeStackNavigator();
+
+const GalleryStack = createNativeStackNavigator();
+
+const SettingsStack = createNativeStackNavigator();
+
 const Tab = createBottomTabNavigator();
+
+const HomeStackNavigation = () => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        options={{
+          title: 'Home',
+        }}
+        name="HomePage"
+        getComponent={() => require('./screens/Home').default}
+      />
+    </HomeStack.Navigator>
+  );
+};
+
+const GalleryStackNavigation = () => {
+  return (
+    <GalleryStack.Navigator>
+      <GalleryStack.Screen
+        name="GalleryPage"
+        getComponent={() => require('./screens/Gallery').default}
+      />
+    </GalleryStack.Navigator>
+  );
+};
+
+const SettingsStackNavigation = () => {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen
+        name="SettingsPage"
+        getComponent={() => require('./screens/Settings').default}
+      />
+      <SettingsStack.Screen
+        name="ChangePassword"
+        getComponent={() => require('./screens/ChangePassword').default}
+      />
+    </SettingsStack.Navigator>
+  );
+};
 
 const HomeTabNavigation = () => {
   return (
@@ -21,22 +69,22 @@ const HomeTabNavigation = () => {
             switch (route.name) {
               case 'Home':
                 return <HomeIcon height={size} width={size} fill={color} />;
+              case 'Gallery':
+                return (
+                  <CollectionsIcons height={size} width={size} fill={color} />
+                );
               case 'Settings':
                 return <SettingsIcon height={size} width={size} fill={color} />;
               default:
                 return null;
             }
           },
+          headerShown: false,
         };
       }}>
-      <Tab.Screen
-        name="Home"
-        getComponent={() => require('./screens/Home').default}
-      />
-      <Tab.Screen
-        name="Settings"
-        getComponent={() => require('./screens/Settings').default}
-      />
+      <Tab.Screen name="Home" component={HomeStackNavigation} />
+      <Tab.Screen name="Gallery" component={GalleryStackNavigation} />
+      <Tab.Screen name="Settings" component={SettingsStackNavigation} />
     </Tab.Navigator>
   );
 };
@@ -90,6 +138,13 @@ const App = () => {
           }}>
           <Stack.Screen name="Home" component={HomeTabNavigation} />
         </Stack.Group>
+        <Stack.Screen
+          options={{
+            title: 'Details',
+          }}
+          name="DetailsPage"
+          getComponent={() => require('./screens/Details').default}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
