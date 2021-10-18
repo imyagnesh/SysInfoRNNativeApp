@@ -16,6 +16,7 @@ import Button from '../../components/Button';
 const Home = ({navigation}) => {
   const [data, setData] = useState([]);
   const translateX = useSharedValue(0);
+  const scale = useSharedValue(1);
 
   const loadData = useCallback(async () => {
     try {
@@ -82,7 +83,11 @@ const Home = ({navigation}) => {
         {
           translateX: withTiming(translateX.value, {
             duration: 1000,
-            easing: Easing.bounce,
+          }),
+        },
+        {
+          scale: withTiming(scale.value, {
+            duration: 500,
           }),
         },
       ],
@@ -91,6 +96,7 @@ const Home = ({navigation}) => {
 
   const moveBall = () => {
     translateX.value = 200;
+    scale.value = 1.2;
   };
 
   return (
