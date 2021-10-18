@@ -5,9 +5,17 @@ import FastImage from 'react-native-fast-image';
 import {RectButton} from 'react-native-gesture-handler';
 import Divider from '../../components/Divider';
 import Typography from '../../components/Typography';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
+import Button from '../../components/Button';
 
 const Home = ({navigation}) => {
   const [data, setData] = useState([]);
+  const translateX = useSharedValue(0);
 
   const loadData = useCallback(async () => {
     try {
@@ -68,8 +76,25 @@ const Home = ({navigation}) => {
 
   const keyExtractor = item => `${item.id}`;
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: withTiming(translateX.value, {
+            duration: 1000,
+            easing: Easing.bounce,
+          }),
+        },
+      ],
+    };
+  });
+
+  const moveBall = () => {
+    translateX.value = 200;
+  };
+
   return (
-    <ScrollView>
+    <ScrollView style={{flex: 1}}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -83,26 +108,21 @@ const Home = ({navigation}) => {
         decelerationRate="fast"
         snapToInterval={330}
       />
-      {/* <ScrollView>
-        {data.map(item => (
-          <View key={item.id}>
-            <FastImage
-              source={{
-                uri: item.thumbnailUrl,
-              }}
-              style={{
-                height: 48,
-                width: 48,
-                borderRadius: 8,
-              }}
-              resizeMode="cover"
-            />
-            <Typography variant="body1">{item.title}</Typography>
-          </View>
-        ))}
-      </ScrollView> */}
+      <Animated.View
+        style={[
+          {
+            height: 100,
+            width: 100,
+            borderRadius: 50,
+            backgroundColor: 'red',
+          },
+          animatedStyle,
+        ]}
+      />
+      <Button title="Move ball" onPress={moveBall} />
     </ScrollView>
   );
 };
 
 export default Home;
+``;

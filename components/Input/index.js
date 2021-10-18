@@ -4,6 +4,7 @@ import Typography from '../Typography';
 import styles from './styles';
 import VisibilityOffIcon from '../../assets/Icons/visibility_off.svg';
 import VisibilityIcon from '../../assets/Icons/visibility.svg';
+import {useTheme} from '@react-navigation/native';
 import {BorderlessButton} from 'react-native-gesture-handler';
 
 const Input = ({
@@ -13,12 +14,13 @@ const Input = ({
   secureTextEntry,
   ...rest
 }) => {
+  const {colors} = useTheme();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   return (
     <View style={{margin: 8}}>
       <TextInput
         ref={innerRef}
-        style={styles.input}
+        style={[styles.input, {color: colors.text}]}
         name={name}
         value={value}
         onChangeText={handleChange(name)}

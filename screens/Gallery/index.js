@@ -31,7 +31,7 @@ const Gallery = ({navigation}) => {
     return (
       <RectButton
         onPress={() =>
-          navigation.navigate('DetailsPage', {headerBackTitle: 'Gallery'})
+          navigation.navigate('DetailsPage', {headerBackTitle: 'Gallery', item})
         }
         style={{
           alignItems: 'center',
@@ -39,7 +39,7 @@ const Gallery = ({navigation}) => {
         <View style={{maxWidth: 500, width: screenWidth}}>
           <FastImage
             source={{
-              uri: item.url,
+              uri: `${item.url}.png`,
             }}
             style={{
               height: 240,
