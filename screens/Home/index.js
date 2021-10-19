@@ -125,7 +125,14 @@ const Home = ({navigation}) => {
           animatedStyle,
         ]}
       />
-      <Button title="Move ball" onPress={moveBall} />
+      <Button
+        title="Go To Animation Page"
+        onPress={() => navigation.navigate('AnimationPage')}
+      />
+      <Button
+        title="Go To Pan Gesture Page"
+        onPress={() => navigation.navigate('PanGesturePage')}
+      />
     </ScrollView>
   );
 };

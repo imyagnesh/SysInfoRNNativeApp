@@ -32,6 +32,20 @@ const HomeStackNavigation = () => {
         name="HomePage"
         getComponent={() => require('./screens/Home').default}
       />
+      <HomeStack.Screen
+        options={{
+          title: 'Animation',
+        }}
+        name="AnimationPage"
+        getComponent={() => require('./screens/Animation').default}
+      />
+      <HomeStack.Screen
+        options={{
+          title: 'PAN Gesture',
+        }}
+        name="PanGesturePage"
+        getComponent={() => require('./screens/PanGesture').default}
+      />
     </HomeStack.Navigator>
   );
 };
